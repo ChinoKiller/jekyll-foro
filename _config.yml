@@ -8,24 +8,15 @@ baseurl: '/tuning-center-foro'
 # disable_landing_page: true
 
 author:
-  name: 'Josh Gerdes'
-  email: josh@joshgerdes.com
-  twitter_username: joshgerdes
-  facebook_username: joshgerdes
-  github_username:  joshgerdes
-  linkedin_username:  joshgerdes
-
-defaults:
-  -
-    scope:
-      path: ''
-      type: 'posts'
-    values:
-        layout: 'post'
+  name: 'Tuning Center'
+  email: tuningcenter@gmail.com
+  twitter_username: TuningCenter
+  facebook_username: TuningCenter
+  github_username:  TuningCenter
+  linkedin_username:  TuningCenter
 
 # Build settings
 destination: _site
-paginate: 10
 permalink: /:year/:title/
 markdown: kramdown
 highlighter: rouge
@@ -40,5 +31,4 @@ kramdown:
   # do not replace newlines by <br>s
   hard_wrap: false
 
-plugins: ['jekyll-paginate']
 exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']

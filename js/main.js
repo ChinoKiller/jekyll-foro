@@ -4,37 +4,54 @@ sitemap:
 exclude: 'yes'
 ---
 
-  $(document).ready(function () {
-    {% if site.disable_landing_page != true %}
-    $('a.blog-button').click(function (e) {
-      if ($('.panel-cover').hasClass('panel-cover--collapsed')) return
-      currentWidth = $('.panel-cover').width()
-      if (currentWidth < 960) {
-        $('.panel-cover').addClass('panel-cover--collapsed')
-        $('.content-wrapper').addClass('animated slideInRight')
-      } else {
-        $('.panel-cover').css('max-width', currentWidth)
-        $('.panel-cover').animate({ 'max-width': '530px', 'width': '40%' }, 400, swing = 'swing', function () { })
+  (function () {
+    var panelCover = document.querySelector('.panel-cover')
+    var contentWrapper = document.querySelector('.content-wrapper')
+    var mobileMenuButton = document.querySelector('.btn-mobile-menu')
+    var mobileMenuIcon = document.querySelector('.btn-mobile-menu__icon')
+    var navigationWrapper = document.querySelector('.navigation-wrapper')
+    var blogButtons = document.querySelectorAll('a.blog-button')
+
+    function shouldCollapseOnLoad () {
+      var searchParams = new URLSearchParams(window.location.search)
+      return searchParams.get('cover_collapsed') === 'true'
+    }
+
+    function collapsePanel () {
+      if (!panelCover || panelCover.classList.contains('panel-cover--collapsed')) return
+      panelCover.classList.add('panel-cover--collapsed')
+
+      if (contentWrapper) {
+        contentWrapper.classList.add('animated', 'slideInRight')
       }
-    })
-
-    if (window.location.hash && window.location.hash == '#blog') {
-      $('.panel-cover').addClass('panel-cover--collapsed')
     }
 
-    if (window.location.pathname !== '{{ site.baseurl }}/' && window.location.pathname !== '{{ site.baseurl }}/index.html') {
-      $('.panel-cover').addClass('panel-cover--collapsed')
+    function toggleMobileMenu () {
+      if (!navigationWrapper || !mobileMenuIcon) return
+
+      navigationWrapper.classList.toggle('visible')
+      navigationWrapper.classList.toggle('animated')
+      navigationWrapper.classList.toggle('bounceInDown')
+      mobileMenuIcon.classList.toggle('icon-list')
+      mobileMenuIcon.classList.toggle('icon-x-circle')
+      mobileMenuIcon.classList.toggle('animated')
+      mobileMenuIcon.classList.toggle('fadeIn')
     }
-    {% endif %}
 
-    $('.btn-mobile-menu').click(function () {
-      $('.navigation-wrapper').toggleClass('visible animated bounceInDown')
-      $('.btn-mobile-menu__icon').toggleClass('icon-list icon-x-circle animated fadeIn')
+    blogButtons.forEach(function (button) {
+      button.addEventListener('click', function (event) {
+        if (!panelCover || panelCover.classList.contains('panel-cover--collapsed')) return
+
+        event.preventDefault()
+        collapsePanel()
+      })
     })
 
-    $('.navigation-wrapper .blog-button').click(function () {
-      $('.navigation-wrapper').toggleClass('visible')
-      $('.btn-mobile-menu__icon').toggleClass('icon-list icon-x-circle animated fadeIn')
-    })
+    if (mobileMenuButton) {
+      mobileMenuButton.addEventListener('click', toggleMobileMenu)
+    }
 
-  })
+    if (shouldCollapseOnLoad() || (window.location.pathname !== '{{ site.baseurl }}/' && window.location.pathname !== '{{ site.baseurl }}/index.html')) {
+      collapsePanel()
+    }
+  })()

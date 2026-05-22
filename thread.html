@@ -1,0 +1,38 @@
+---
+layout: default
+title: Hilo del foro
+robots: noindex
+cover_collapsed: true
+permalink: /thread/
+---
+
+<section class="forum-shell forum-shell--thread" data-forum-view="thread">
+  <button type="button" class="forum-back-link btn small" data-forum-back-button>← Volver al foro</button>
+
+  <article class="forum-card forum-thread-detail" data-thread-detail>
+    <div class="forum-card__body">
+      <p class="forum-empty">Cargando thread...</p>
+    </div>
+  </article>
+
+  <section class="forum-card forum-replies-card">
+    <header class="forum-card__header">
+      <p class="forum-card__eyebrow">Respuestas</p>
+      <h2 class="forum-card__title">Conversación</h2>
+    </header>
+
+    <div class="forum-card__body">
+      <div class="forum-reply-list" data-reply-list></div>
+      <p class="forum-empty hidden" data-empty-replies>No hay respuestas todavía. Escribe la primera.</p>
+
+      <form class="forum-form forum-reply-form" data-reply-form>
+        <label class="forum-field">
+          <span>Tu respuesta</span>
+          <textarea name="body" rows="6" maxlength="1000" placeholder="Responde al thread" required></textarea>
+        </label>
+
+        <button type="submit" class="btn forum-form__submit">Responder</button>
+      </form>
+    </div>
+  </section>
+</section>
